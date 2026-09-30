@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - VK LEDGUR CONVERTER{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1>Welcome, {{ username }}! 👋</h1>
+    
+    <!-- STATISTICS -->
+    <div class="dashboard-grid">
+        <div class="stat-card total">
+            <div class="stat-number">{{ total_count }}</div>
+            <div class="stat-label">Total Ledgers</div>
+        </div>
+        
+        <div class="stat-card saved">
+            <div class="stat-number">{{ saved_count }}</div>
+            <div class="stat-label">Saved Ledgers</div>
+        </div>
+        
+        <div class="stat-card draft">
+            <div class="stat-number">{{ draft_count }}</div>
+            <div class="stat-label">Draft Ledgers</div>
+        </div>
+    </div>
+    
+    <!-- QUICK ACTIONS -->
+    <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-buttons">
+            <a href="/create_ledger" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create Ledger
+            </a>
+            <a href="/saved" class="btn btn-secondary">
+                <i class="fas fa-check"></i> Saved Ledgers
+            </a>
+            <a href="/drafts" class="btn btn-secondary">
+                <i class="fas fa-file-alt"></i> Draft Ledgers
+            </a>
+            <a href="/profile" class="btn btn-secondary">
+                <i class="fas fa-user"></i> Profile
+            </a>
+        </div>
+    </div>
+    
+    <!-- RECENT LEDGERS -->
+    {% if recent_ledgers %}
+        <div class="recent-section">
+            <h2>Recent Ledgers</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ledger Name</th>
+                        <th>Account</th>
+                        <th>Status</th>
+                        <th>Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ledger in recent_ledgers %}
+                        <tr>
+                            <td><strong>{{ ledger['ledger_name'] }}</strong></td>
+                            <td>{{ ledger['account_name'] or '-' }}</td>
+                            <td>
+                                <span class="badge badge-{{ ledger['status'] }}">
+                                    {{ ledger['status'].upper() }}
+                                </span>
+                            </td>
+                            <td>{{ ledger['updated_at'][:10] }}</td>
+                            <td class="table-actions">
+                                <a href="/ledger/{{ ledger['id'] }}/view" class="btn-sm btn-info">View</a>
+                                <a href="/ledger/{{ ledger['id'] }}/editor" class="btn-sm btn-warning">Edit</a>
+                                <button onclick="deleteLedger({{ ledger['id'] }})" class="btn-sm btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <p>No ledgers yet. <a href="/create_ledger">Create your first ledger</a></p>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function deleteLedger(ledgerId) {
+    if (confirm('Are you sure you want to delete this ledger?')) {
+        fetch(`/ledger/${ledgerId}/delete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  location.reload();
+              } else {
+                  alert('Error deleting ledger');
+              }
+          });
+    }
+}
+</script>
+{% endblock %}

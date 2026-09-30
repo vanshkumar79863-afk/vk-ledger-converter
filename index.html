@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Home - VK LEDGUR CONVERTER{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>📊 Turn Your Paper Ledger Into Digital</h1>
+        <p>VK LEDGUR CONVERTER helps you digitalize your accounting ledgers instantly.</p>
+        <p>Scan, create, edit, manage, and download your ledgers in multiple formats.</p>
+        
+        <div class="hero-buttons">
+            {% if session.user_id %}
+                <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+            {% else %}
+                <a href="/signup" class="btn btn-primary">Get Started - Sign Up</a>
+                <a href="/login" class="btn btn-secondary">Already Have Account? Login</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features">
+    <h2>Features</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📸</div>
+            <h3>Upload & Scan</h3>
+            <p>Upload photos or PDFs of your ledgers and convert them to digital format instantly.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">✍️</div>
+            <h3>Manual Entry</h3>
+            <p>Create and manage ledgers completely online. Add entries as you go.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">✏️</div>
+            <h3>Easy Editing</h3>
+            <p>Edit any entry anytime. Running balance auto-calculates. No math errors!</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">📝</div>
+            <h3>Save Drafts</h3>
+            <p>Work on your ledger gradually. Save as draft and come back later to finalize.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Secure</h3>
+            <p>Your data is protected with username/password login. Enterprise-grade security.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">📥</div>
+            <h3>Export</h3>
+            <p>Download your ledgers as PDF, CSV, HTML, and more. Perfect for printing.</p>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" class="how-it-works">
+    <h2>How It Works</h2>
+    
+    <div class="workflow">
+        <h3>Workflow 1: Upload & Scan</h3>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <strong>Upload</strong>
+                <p>Take photo of your ledger</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <strong>Review</strong>
+                <p>Check extracted data</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <strong>Save</strong>
+                <p>Finalize & download</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="workflow">
+        <h3>Workflow 2: Create Manually</h3>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <strong>Create</strong>
+                <p>New ledger details</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <strong>Add Entries</strong>
+                <p>Transactions & amounts</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <strong>Download</strong>
+                <p>Export in any format</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>Ready to Digitalize Your Ledgers?</h2>
+    <p>Start free today. No credit card required.</p>
+    <div class="cta-buttons">
+        {% if not session.user_id %}
+            <a href="/signup" class="btn btn-primary btn-lg">Sign Up Now</a>
+            <a href="/login" class="btn btn-secondary btn-lg">Login</a>
+        {% else %}
+            <a href="/dashboard" class="btn btn-primary btn-lg">Go to Dashboard</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - VK LEDGUR CONVERTER{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-card">
+        <h1>Create Account</h1>
+        <p class="form-subtitle">Join VK LEDGUR CONVERTER today</p>
+        
+        {% if errors %}
+            <div class="alert alert-error">
+                <strong>❌ Registration Failed</strong>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        <form method="POST" class="form">
+            <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input 
+                    type="text" 
+                    id="fullName" 
+                    name="full_name" 
+                    class="form-control" 
+                    placeholder="e.g., Vansh Kumar"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username *</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    class="form-control" 
+                    placeholder="e.g., Vansh_2026"
+                    required
+                >
+                <small>3-50 characters (letters, numbers, _, -)</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-control" 
+                    placeholder="At least 8 characters"
+                    required
+                >
+                <small>8+ chars, numbers, and special characters (@, #, $, etc.)</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password *</label>
+                <input 
+                    type="password" 
+                    id="confirmPassword" 
+                    name="confirm_password" 
+                    class="form-control" 
+                    placeholder="Re-enter password"
+                    required
+                >
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        </form>
+        
+        <p class="form-footer">
+            Already have an account? <a href="/login">Login here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

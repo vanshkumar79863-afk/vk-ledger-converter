@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - VK LEDGUR CONVERTER{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-card">
+        <h1>👤 My Profile</h1>
+        
+        <div class="profile-info">
+            <div class="info-group">
+                <label>Full Name</label>
+                <p>{{ user['full_name'] }}</p>
+            </div>
+            
+            <div class="info-group">
+                <label>Username</label>
+                <p>{{ user['username'] }}</p>
+            </div>
+            
+            <div class="info-group">
+                <label>Account Created</label>
+                <p>{{ user['created_at'][:10] }}</p>
+            </div>
+        </div>
+        
+        <h2 style="margin-top: 40px;">📊 Your Statistics</h2>
+        
+        <div class="stats-grid">
+            <div class="stat">
+                <div class="stat-value">{{ stats['total'] or 0 }}</div>
+                <div class="stat-label">Total Ledgers</div>
+            </div>
+            
+            <div class="stat">
+                <div class="stat-value">{{ stats['saved'] or 0 }}</div>
+                <div class="stat-label">Saved</div>
+            </div>
+            
+            <div class="stat">
+                <div class="stat-value">{{ stats['draft'] or 0 }}</div>
+                <div class="stat-label">Drafts</div>
+            </div>
+        </div>
+        
+        <div class="profile-actions" style="margin-top: 40px;">
+            <a href="/dashboard" class="btn btn-secondary">← Back to Dashboard</a>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

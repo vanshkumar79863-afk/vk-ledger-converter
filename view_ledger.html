@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}View Ledger - VK LEDGUR CONVERTER{% endblock %}
+
+{% block content %}
+<div class="ledger-view-container">
+    <div class="ledger-header">
+        <div>
+            <h1>{{ ledger['ledger_name'] }}</h1>
+            <p><strong>Account:</strong> {{ ledger['account_name'] or '-' }} | <strong>Status:</strong> {{ ledger['status'].upper() }}</p>
+            <p><strong>Account #:</strong> {{ ledger['account_number'] or '-' }} | <strong>Sheet #:</strong> {{ ledger['sheet_number'] or '-' }}</p>
+        </div>
+        <div class="view-actions">
+            <a href="/ledger/{{ ledger['id'] }}/export/pdf" class="btn btn-info">📄 PDF</a>
+            <a href="/ledger/{{ ledger['id'] }}/export/csv" class="btn btn-info">📊 CSV</a>
+            {% if ledger['status'] == 'draft' %}
+                <a href="/ledger/{{ ledger['id'] }}/editor" class="btn btn-warning">✏️ Edit</a>
+            {% endif %}
+            <a href="/dashboard" class="btn btn-secondary">← Dashboard</a>
+        </div>
+    </div>
+    
+    <table class="table view-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Details</th>
+                <th>Reference</th>
+                <th class="text-right">Debit (₹)</th>
+                <th class="text-right">Credit (₹)</th>
+                <th class="text-right">Balance (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+                <tr>
+                    <td>{{ entry['entry_date'] }}</td>
+                    <td>{{ entry['details'] }}</td>
+                    <td>{{ entry['reference'] }}</td>
+                    <td class="text-right">{{ "%.2f"|format(entry['debit']) }}</td>
+                    <td class="text-right">{{ "%.2f"|format(entry['credit']) }}</td>
+                    <td class="text-right"><strong>{{ "%.2f"|format(entry['balance']) }}</strong></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if not entries %}
+        <p class="no-data">No entries in this ledger.</p>
+    {% endif %}
+</div>
+{% endblock %}
